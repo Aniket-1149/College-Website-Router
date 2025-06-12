@@ -17,6 +17,7 @@ function App() {
 
   return (
     <>
+    <div className='body'>
       <Navbar/>
       <HeroSection/>
       <About/>
@@ -25,6 +26,7 @@ function App() {
       <Achievements/>
       <Contact/>
       <Footer/>
+      </div>
     </>
   )
 }

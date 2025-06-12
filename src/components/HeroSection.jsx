@@ -9,7 +9,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <div
+    <div  
       id="hero"
       className="relative z-10 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 bg-black"
       style={{
@@ -19,14 +19,14 @@ const HeroSection = () => {
       }}
     >
       {/* Black overlay */}
-      <div className="absolute inset-0 bg-black/60"></div>
+      <div className="absolute inset-0 bg-black/75"></div>
 
       <div className="relative max-w-7xl mx-auto text-center text-white">
         {/* Hero Content */}
         <div className="space-y-8 animate-fade-in">
           {/* Main Heading */}
           <h1 className="font-Inter text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
-            <span className="block">LNCT Group</span>
+            <span className="block">LNCT Group Of Colleges</span>
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
               of Colleges
             </span>
