@@ -1,123 +1,149 @@
+// src/components/Colleges.jsx
+import React, { useState, useRef } from 'react';
+import CollegeCard from './CollegeCard'; // Import the new component
 
-import React, { useState } from 'react';
+// Re-add placeholderImageUrl here for dummyColleges generation
+const placeholderImageUrl = (width, height, text = 'Image Unavailable') =>
+    `https://placehold.co/${width}x${height}/CCCCCC/333333?text=${encodeURIComponent(text)}`;
 
 const Colleges = () => {
-    const imageUrl = "https://lnct.ac.in/wp-content/uploads/2021/04/lnct-slider2-1536x684.jpg";
-    const placeholderImageUrl = (width, height, text = 'Image Unavailable') =>
-        `https://placehold.co/${width}x${height}/CCCCCC/333333?text=${encodeURIComponent(text)}`;
+    const collegesSectionRef = useRef(null);
 
-    // Initial college data (can be extended with more real data if available)
+    // IMPORTANT: Make sure your college data has unique 'id' properties
     const initialCollegesData = [
         {
-            name: "LNCT College of Engineering",
+            id: 'lnct-tech', // Unique ID
+            name: "LNCT College of Technology",
             category: "Engineering",
             description: "Premier engineering education with cutting-edge technology and industry partnerships.",
             established: "Est. 1994",
-            url: "https://lnctgroup.co.in/lnct-bhopal/",
+            url: "https://lnct.ac.in/",
             tagColorClass: "bg-primary",
-            hoverTextColorClass: "group-hover:text-primary"
+            hoverTextColorClass: "group-hover:text-primary",
+            image: "public/lnctprojectpic/lnct_mainpic.jpg"
         },
         {
-            name: "LNCT Institute of Management",
+            id: 'lnct-science', // Unique ID
+            name: "LNCT & Science",
             category: "Management",
             description: "Developing future business leaders through innovative management programs.",
             established: "MBA Programs",
-            url: "https://lnctgroup.co.in/lnims/",
+            url: "https://lnct.ac.in/lnct-and-science/",
             tagColorClass: "bg-secondary",
-            hoverTextColorClass: "group-hover:text-secondary"
+            hoverTextColorClass: "group-hover:text-secondary",
+            image: "public/lnctprojectpic/lnct&S.jpg"
         },
         {
-            name: "LNCT College of Pharmacy",
+            id: 'lnct-excellence', // Unique ID
+            name: "LNCT Excellence",
             category: "Pharmacy",
             description: "Excellence in pharmaceutical education and research for healthcare advancement.",
             established: "Healthcare",
-            url: "https://lnctgroup.co.in/lncp/",
+            url: "https://lnct.ac.in/lnct-excellence-college/",
             tagColorClass: "bg-accent",
-            hoverTextColorClass: "group-hover:text-accent"
+            hoverTextColorClass: "group-hover:text-accent",
+            image: "public/lnctprojectpic/lnctExcellence.jpg"
         },
         {
-            name: "LNCT Institute of Technology",
+            id: 'lnct-university', // Unique ID
+            name: "LNCT University",
             category: "Technology",
             description: "Advanced technology programs preparing students for the digital future.",
             established: "IT & CS",
-            url: "https://lnctgroup.co.in/lnct-indore/",
+            url: "https://lnctu.ac.in/",
             tagColorClass: "bg-primary",
-            hoverTextColorClass: "group-hover:text-primary"
+            hoverTextColorClass: "group-hover:text-primary",
+            image: "public/lnctprojectpic/Lnct_university.jpg"
         },
         {
-            name: "LNCT College of Arts & Sciences",
+            id: 'lnct-indore', // Unique ID
+            name: "LNCT Indore",
             category: "Liberal Arts",
             description: "Comprehensive liberal arts education fostering critical thinking and creativity.",
             established: "Liberal Arts",
-            url: "https://lnctgroup.co.in/lnct-jabalpur/",
+            url: "https://www.lnctgroup.in/lnct-indore/",
             tagColorClass: "bg-secondary",
-            hoverTextColorClass: "group-hover:text-secondary"
+            hoverTextColorClass: "group-hover:text-secondary",
+            image: "public/lnctprojectpic/lnctIndore.jpg"
         },
         {
-            name: "LNCT Institute of Design",
+            id: 'lnct-design', // Unique ID
+            name: "JNCT Bhopal",
             category: "Design",
             description: "Creative design programs nurturing artistic vision and innovative thinking.",
             established: "Creative Arts",
             url: "https://lnctgroup.co.in/lnct-raipur/",
             tagColorClass: "bg-accent",
-            hoverTextColorClass: "group-hover:text-accent"
+            hoverTextColorClass: "group-hover:text-accent",
+            image: "public/lnctprojectpic/Jnctbhopal.webp"
         },
         {
-            name: "LNCT Research Institute",
+            id: 'lnct-research', // Unique ID
+            name: "LNCT MCA",
             category: "Research",
             description: "Leading research initiatives driving innovation and scientific advancement.",
             established: "R&D",
-            url: "https://lnctgroup.co.in/research/",
+            url: "https://lnct.ac.in/mca/",
             tagColorClass: "bg-primary",
-            hoverTextColorClass: "group-hover:text-primary"
+            hoverTextColorClass: "group-hover:text-primary",
+            image: "public/lnctprojectpic/LNCT_MCA.jpg"
         },
         {
-            name: "LNCT Graduate Studies",
+            id: 'lnct-graduate', // Unique ID
+            name: "LNCT Pharmacy",
             category: "Graduate",
             description: "Advanced graduate programs for specialized expertise and professional growth.",
             established: "Masters & PhD",
-            url: "https://lnctgroup.co.in/graduate-studies/",
+            url: "https://lnct.ac.in/lnct-pharmacy/",
             tagColorClass: "bg-secondary",
-            hoverTextColorClass: "group-hover:text-secondary"
+            hoverTextColorClass: "group-hover:text-secondary",
+            image: "public/lnctprojectpic/LNCT_Pharmacy.jpg"
         }
     ];
 
-    // Generate 25 additional dummy cards for demonstration
     const dummyColleges = Array.from({ length: 25 }, (_, i) => ({
+        id: `dummy-college-${i + 1}`, // Ensure truly unique IDs
         name: `Dummy College ${i + 1}`,
-        category: `Field ${i % 3 + 1}`,
+        category: `Field ${(i % 3) + 1}`,
         description: `This is a dummy description for college ${i + 1}. More details coming soon.`,
-        established: `Est. 20XX`,
-        url: "#", // Placeholder URL for dummy cards
+        established: `Est. 20${5 + i}`,
+        url: "#",
         tagColorClass: `bg-${['primary', 'secondary', 'accent'][i % 3]}`,
-        hoverTextColorClass: `group-hover:text-${['primary', 'secondary', 'accent'][i % 3]}`
+        hoverTextColorClass: `group-hover:text-${['primary', 'secondary', 'accent'][i % 3]}`,
+        image: placeholderImageUrl(400, 200, `Dummy College ${i + 1} Image`)
     }));
 
-    // Combine initial and dummy data
     const allCollegesData = [...initialCollegesData, ...dummyColleges];
 
-    // State to manage the number of visible cards
-    const initialCardsToShow = 8; // Display first 8 cards initially
+    const initialCardsToShow = 8;
     const [cardsToShow, setCardsToShow] = useState(initialCardsToShow);
 
-    // Handler for college card clicks
     const handleCardClick = (url) => {
         if (url) {
             window.open(url, '_blank');
         }
     };
 
-    // Handler for "View All Programs" button click
     const handleViewAllPrograms = () => {
-        // Increase the number of cards shown by 25, or show all if less than 25 remain
         setCardsToShow(prev => Math.min(prev + 25, allCollegesData.length));
     };
 
+    const handleShowLessPrograms = () => {
+        setCardsToShow(initialCardsToShow);
+        if (collegesSectionRef.current) {
+            collegesSectionRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    };
+
     const hasMoreCards = cardsToShow < allCollegesData.length;
+    const showLessButtonVisible = cardsToShow > initialCardsToShow;
+
     return (
         <div>
-            {/* Custom CSS for animations and colors (typically in a global CSS file or Tailwind config)
-          Included here for self-containment in this immersive artifact. */}
+            {/* Custom CSS for animations and colors (keep this in Colleges.jsx or a global file) */}
             <style>{`
         /* Custom colors - these are illustrative; actual values depend on your Tailwind config */
         .text-primary { color: #4F46E5; } /* indigo-600 */
@@ -149,76 +175,55 @@ const Colleges = () => {
         }
       `}</style>
 
-            <section id="colleges" className="py-20 bg-white font-inter">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Section Header */}
+            <section id="colleges" ref={collegesSectionRef} className="py-16 bg-black text-white font-inter">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl sm:text-5xl font-bold text-neutral-900 mb-6">Colleges</h2>
-                        <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
+                        <h2 className="text-3xl font-bold text-center text-white mb-12">Colleges</h2>
+                        <p className="text-xl text-neutral-300 max-w-3xl mx-auto">
                             Explore our diverse range of colleges and institutes, each designed to nurture excellence in specialized fields.
                         </p>
                     </div>
 
-                    {/* College Cards Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                         {allCollegesData.slice(0, cardsToShow).map((college, index) => (
-                            <div
-                                key={index} // Using index as key is acceptable here as the list is static, but consider unique IDs for production
-                                className={`group relative bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-2 animate-float`}
-                                style={{ animationDelay: `${index * 50}ms` }} // Staggering the float animation for a smoother effect
-                                onClick={() => handleCardClick(college.url)}
-                            >
-                                <div className="relative overflow-hidden">
-                                    <img
-                                        src={imageUrl}
-                                        alt={college.name}
-                                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
-                                        loading="lazy"
-                                        onError={(e) => { e.target.onerror = null; e.target.src = placeholderImageUrl(1080, 640, college.name); }}
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                    <div className={`absolute top-4 right-4 text-white px-3 py-1 rounded-full text-sm font-semibold transform translate-x-full group-hover:translate-x-0 transition-transform duration-300 ${college.tagColorClass}`}>
-                                        {college.category}
-                                    </div>
-                                </div>
-                                <div className="p-6">
-                                    <h3 className={`text-xl font-bold text-neutral-900 mb-2 transition-colors duration-300 ${college.hoverTextColorClass}`}>
-                                        {college.name}
-                                    </h3>
-                                    <p className="text-neutral-600 text-sm mb-4 line-clamp-2">
-                                        {college.description}
-                                    </p>
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-xs text-neutral-500 bg-neutral-100 px-2 py-1 rounded">{college.established}</span>
-                                        <div className={`w-8 h-8 ${college.tagColorClass}/10 rounded-full flex items-center justify-center group-hover:${college.tagColorClass} group-hover:text-white transition-all duration-300`}>
-                                            <span className="text-sm">→</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <CollegeCard
+                                key={college.id} // Use the unique ID as the key
+                                college={college}
+                                onCardClick={handleCardClick}
+                                index={index} // Pass index for stagger animation
+                            />
                         ))}
                     </div>
 
-                    {/* Bottom CTA and Load More Button */}
-                    {hasMoreCards && (
+                    {(hasMoreCards || showLessButtonVisible) && (
                         <div className="text-center mt-16">
-                            <p className="text-lg text-neutral-600 mb-6">
+                            <p className="text-lg text-neutral-300 mb-6">
                                 Can't find what you're looking for? Explore all our programs and campuses.
                             </p>
-                            <button
-                                onClick={handleViewAllPrograms}
-                                className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-300 transform hover:scale-105"
-                            >
-                                View More Programs ({allCollegesData.length - cardsToShow} remaining)
-                            </button>
+                            <div className="flex justify-center gap-4">
+                                {hasMoreCards && (
+                                    <button
+                                        onClick={handleViewAllPrograms}
+                                        className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-300 transform hover:scale-105"
+                                    >
+                                        View More Programs ({allCollegesData.length - cardsToShow} remaining)
+                                    </button>
+                                )}
+                                {showLessButtonVisible && (
+                                    <button
+                                        onClick={handleShowLessPrograms}
+                                        className="bg-neutral-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-neutral-600 transition-colors duration-300 transform hover:scale-105"
+                                    >
+                                        Show Less
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>
             </section>
-        
-      
-    </div >
-  );
+        </div>
+    );
 }
 
-export default Colleges
+export default Colleges;

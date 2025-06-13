@@ -10,6 +10,7 @@ import Programmes from './components/Programmes'
 import Achievements from './components/Achievements'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import AboutVisionSlider from './components/AboutVisionSlider'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Navbar/>
       <HeroSection/>
       <About/>
+      <AboutVisionSlider/>
       <Colleges/>
       <Programmes/>
       <Achievements/>
