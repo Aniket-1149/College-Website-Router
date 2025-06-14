@@ -1,4 +1,3 @@
-// src/components/CollegeCard.jsx
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 
@@ -15,9 +14,9 @@ const CollegeCard = ({ college, onCardClick, index }) => {
             opacity: 1,
             y: 0,
             transition: {
-                duration: 0.4, // *** KEY CHANGE: Reduced duration from 0.6s to 0.4s for faster individual card animation ***
+                duration: 0.4,
                 ease: "easeOut",
-                delay: index * 0.05, // *** KEY CHANGE: Drastically reduced stagger delay from 0.15s to 0.05s ***
+                delay: index * 0.05,
             },
         },
     };
@@ -35,21 +34,20 @@ const CollegeCard = ({ college, onCardClick, index }) => {
         >
             <div className="relative overflow-hidden">
                 <img
-                    src={college.image}
+                    src={college.image} // This is the crucial line
                     alt={college.name}
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
                     loading="lazy"
-                    onError={(e) => { e.target.onerror = null; e.target.src = placeholderImageUrl(1080, 640, college.name); }}
+                    onError={(e) => { e.target.onerror = null; e.target.src = placeholderImageUrl(1080, 640, college.name); }} // Fallback
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className={`absolute top-4 right-4 text-white px-3 py-1 rounded-full text-sm font-semibold transform translate-x-full group-hover:translate-x-0 transition-transform duration-300 ${college.tagColorClass}`}>
-                    {college.category}
-                </div>
+                {/* Category div has been removed from here */}
             </div>
             <div className="p-6 flex flex-col justify-between flex-grow">
                 <h3 className={`text-xl font-bold text-neutral-900 mb-2 transition-colors duration-300 ${college.hoverTextColorClass}`}>
                     {college.name}
                 </h3>
+                {/* This paragraph will now display the link-related description */}
                 <p className="text-neutral-700 text-base leading-relaxed mb-4 line-clamp-2">
                     {college.description}
                 </p>
