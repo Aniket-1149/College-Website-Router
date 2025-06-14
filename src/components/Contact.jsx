@@ -25,14 +25,14 @@ const Contact = () => {
       iconBg: "bg-primary/10",
       iconColor: "text-primary",
       title: "Main Campus",
-      details: ["Kalchuri Nagar, Raisen Road", "Bhopal, Madhya Pradesh 462022"],
+      details: ["Raisen Rd, nr. Hanuman Mandir, Kalchuri Nagar, Bhopal, Madhya Pradesh 462022"],
     },
     {
       icon: "📞",
       iconBg: "bg-secondary/10",
       iconColor: "text-secondary",
       title: "Phone",
-      details: ["+91 755 2740800", "+91 755 2740900"],
+      details: ["+91 0755 618 5300"],
       action: "tel:+917552740800"
     },
     {
@@ -40,7 +40,7 @@ const Contact = () => {
       iconBg: "bg-accent/10",
       iconColor: "text-accent",
       title: "Email",
-      details: ["info@lnctgroup.co.in", "admissions@lnctgroup.co.in"],
+      details: ["Info@Lnct.Ac.In, Admission@Lnct.Ac.In, Jobs@Lnct.Ac.In"],
       action: "mailto:info@lnctgroup.co.in"
     },
     {
@@ -48,7 +48,7 @@ const Contact = () => {
       iconBg: "bg-primary/10",
       iconColor: "text-primary",
       title: "Office Hours",
-      details: ["Monday - Friday: 9:00 AM - 6:00 PM", "Saturday: 9:00 AM - 2:00 PM"],
+      details: ["Monday - Friday: 8:30 AM - 5:00 PM", "Saturday: 8:30 AM - 5:00 PM"],
     },
   ];
 

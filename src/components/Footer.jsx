@@ -16,25 +16,25 @@ const Footer = () => {
     { name: "Academic Programs", url: "#programs" },
     { name: "Achievements", url: "#achievements" },
     { name: "Contact Us", url: "#contact" },
-    { name: "Admissions", url: "#admissions" },
-    { name: "Student Portal", url: "#student-portal" },
+    { name: "Admissions", url: "https://lnct.ac.in/admission-process/" },
+    { name: "Student Portal", url:"https://lnct.ac.in/user-login/" },
   ];
 
   const programsAndServices = [
-    { name: "Engineering Programs", url: "#engineering" },
-    { name: "Management Studies", url: "#management" },
-    { name: "Medical & Pharmacy", url: "#medical" },
-    { name: "Arts & Sciences", url: "#arts-sciences" },
-    { name: "Research Programs", url: "#research" },
-    { name: "Online Learning", url: "#online-learning" },
-    { name: "Career Services", url: "#career-services" },
-    { name: "Alumni Network", url: "#alumni-network" },
+    { name: "Engineering Programs", url: "https://lnct.ac.in/#" },
+    { name: "Management Studies", url: "https://lnct.ac.in/lnct-mba" },
+    { name: "Medical", url: "https://lnctu.ac.in/lnmc/" },
+    { name: "Arts & Sciences", url: "https://lnct.ac.in/lnct-group/" },
+    { name: "Research Programs", url: "https://lnct.ac.in/" },
+    { name: "Pharmacy", url: "https://lnct.ac.in/lnct-pharmacy/" },
+    { name: "Career Services", url: "https://lnct.ac.in/career/" },
+    { name: "Alumni Network", url: "https://lnct.ac.in/eminent-alumni/" },
   ];
 
   const contactDetails = [
     { icon: "📍", text: "Kalchuri Nagar, Raisen Road\nBhopal, MP 462022", colorClass: "text-primary" },
-    { icon: "📞", text: "+91 755 2740800", colorClass: "text-secondary", action: "tel:+917552740800" },
-    { icon: "✉️", text: "info@lnctgroup.co.in", colorClass: "text-accent", action: "mailto:info@lnctgroup.co.in" },
+    { icon: "📞", text: "07556185300", colorClass: "text-secondary", action: "tel:+9107556185300" },
+    { icon: "✉️", text: "Info@Lnct.Ac.In", colorClass: "text-accent", action: "mailto:info@lnctgroup.co.in" },
   ];
 
   const handleNewsletterSubmit = (e) => {
@@ -92,7 +92,7 @@ const Footer = () => {
               {/* Educational Excellence Image */}
               <div className="relative rounded-lg overflow-hidden mb-6">
                 <img
-                  src={imageUrl}
+                  src="/footer/footer2.jpg"
                   alt="Educational Excellence"
                   className="w-full h-32 object-cover"
                   loading="lazy"
@@ -106,16 +106,16 @@ const Footer = () => {
 
               {/* Social Media Links */}
               <div className="flex space-x-4">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                <a href="https://www.facebook.com/LNCTGroupOfCollege" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
                   <span className="text-sm">f</span>
                 </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
-                  <span className="text-sm">t</span>
+                <a href="https://www.instagram.com/lnctgroupofcolleges" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                  <span className="text-sm">Ig</span>
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                <a href="https://www.linkedin.com/company/lnct-group-of-colleges-bhopal/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
                   <span className="text-sm">in</span>
                 </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
+                <a href="https://www.youtube.com/c/LnctBroadcastingChannel" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors duration-300">
                   <span className="text-sm">yt</span>
                 </a>
               </div>
@@ -135,7 +135,7 @@ const Footer = () => {
               {/* Professional Environment Image */}
               <div className="relative rounded-lg overflow-hidden mt-8">
                 <img
-                  src={imageUrl}
+                  src="/footer/footer1.jpeg"
                   alt="Professional Environment"
                   className="w-full h-32 object-cover"
                   loading="lazy"

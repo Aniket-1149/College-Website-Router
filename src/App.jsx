@@ -20,11 +20,15 @@ function App() {
     <>
     <div className='body'>
       <Navbar/>
+      <div id='home'>
       <HeroSection/>
+      </div>
       <About/>
       <AboutVisionSlider/>
       <Colleges/>
+      <div id="programs"> 
       <Programmes/>
+      </div>
       <Achievements/>
       <Contact/>
       <Footer/>

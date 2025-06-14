@@ -2,10 +2,89 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from "framer-motion";
 
 const Achievements = () => {
-    // Placeholder image URLs for robustness
-    const imageUrl = "https://lnct.ac.in/wp-content/uploads/2021/04/lnct-slider2-1536x684.jpg"; // Example central image
+    // Placeholder image URLs for robustness - now used for fallbacks
     const placeholderImageUrl = (width, height, text = 'Image Unavailable') =>
         `https://placehold.co/${width}x${height}/CCCCCC/333333?text=${encodeURIComponent(text)}`;
+
+    // Reusable Image Slider Component
+    const GenericImageSlider = ({ images, sectionTitle }) => {
+        const [currentSlide, setCurrentSlide] = useState(0);
+        const touchStartX = useRef(0);
+        const touchEndX = useRef(0);
+        const autoSlideIntervalRef = useRef(null);
+
+        // Function to advance to the next slide
+        const goToNextSlide = () => {
+            setCurrentSlide((prev) => (prev + 1) % images.length);
+        };
+
+        // Effect for auto-sliding
+        useEffect(() => {
+            autoSlideIntervalRef.current = setInterval(goToNextSlide, 5000); // Change slide every 5 seconds
+            return () => clearInterval(autoSlideIntervalRef.current);
+        }, []);
+
+        // Reset auto-slide timer when slide changes manually or automatically
+        useEffect(() => {
+            clearInterval(autoSlideIntervalRef.current);
+            autoSlideIntervalRef.current = setInterval(goToNextSlide, 5000);
+        }, [currentSlide]);
+
+        // Touch event handlers for swipe
+        const handleTouchStart = (e) => {
+            touchStartX.current = e.touches[0].clientX;
+        };
+
+        const handleTouchMove = (e) => {
+            touchEndX.current = e.touches[0].clientX;
+        };
+
+        const handleTouchEnd = () => {
+            if (touchStartX.current - touchEndX.current > 50) {
+                // Swiped left
+                goToNextSlide();
+            } else if (touchStartX.current - touchEndX.current < -50) {
+                // Swiped right
+                setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
+            }
+            // Reset touch coordinates
+            touchStartX.current = 0;
+            touchEndX.current = 0;
+        };
+
+        return (
+            <div
+                className="relative rounded-2xl overflow-hidden shadow-xl mb-12 flex items-center justify-center bg-black"
+
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+            >
+                <img
+                    alt={`${sectionTitle} Image ${currentSlide + 1}`}
+                    className="w-full max-h-[500px] object-contain transition-opacity duration-1000 mx-auto" // Smoother transition
+                    loading="lazy"
+                    src={images[currentSlide]}
+                    key={currentSlide} // Forces re-render for transition
+                    onError={(e) => { e.target.onerror = null; e.target.src = placeholderImageUrl(1200, 400, `${sectionTitle} ${currentSlide + 1}`); }}
+                />
+                {/* Overlay for depth and text visibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl"></div>
+
+                {/* Slider Navigation Dots */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    {images.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentSlide(index)}
+                            className={`w-3 h-3 rounded-full ${currentSlide === index ? 'bg-primary' : 'bg-white bg-opacity-50'} transition-colors duration-300`}
+                            aria-label={`Go to slide ${index + 1}`}
+                        ></button>
+                    ))}
+                </div>
+            </div>
+        );
+    };
 
     // Core high-level statistics (for the main hero section)
     const heroAchievementStats = [
@@ -14,46 +93,24 @@ const Achievements = () => {
         { value: "25+", label: "Years Excellence", colorClass: "text-secondary", targetValue: 25 },
     ];
 
-    // General success narratives (e.g., alumni impact) - REVERTED TO PREVIOUS STYLE
-    const successStories = [
-        {
-            title: "Global Tech Leaders",
-            description: "Our alumni lead innovation at Fortune 500 companies including Google, Microsoft, and Apple.",
-            tags: ["Tech Industry", "500+ Placements"],
-            hoverTextColorClass: "group-hover:text-primary",
-            tagBgColorClass: "bg-primary/10",
-            tagTextColorClass: "text-primary",
-            imageSrc: imageUrl, // Using general image for simplicity or specific if provided
-        },
-        {
-            title: "Startup Entrepreneurs",
-            description: "Alumni have founded 200+ successful startups with combined valuation exceeding $2 billion.",
-            tags: ["Entrepreneurship", "200+ Startups"],
-            hoverTextColorClass: "group-hover:text-secondary",
-            tagBgColorClass: "bg-secondary/10",
-            tagTextColorClass: "text-secondary",
-            imageSrc: imageUrl, // Using general image for simplicity or specific if provided
-        },
-    ];
-
     // Overall impact statistics (for dynamic numbers)
     const initialImpactStats = [
         { value: "50,000+", label: "Graduates", target: 50000, current: 0, suffix: "+" },
         { value: "98%", label: "Placement Rate", target: 98, current: 0, suffix: "%" },
         { value: "500+", label: "Industry Partners", target: 500, current: 0, suffix: "+" },
-        { value: "200+", label: "Research Patents", target: 200, current: 0, suffix: "+" },
+        { value: "130+", label: "Research Patents", target: 130, current: 0, suffix: "+" },
     ];
 
     const [impactStatistics, setImpactStatistics] = useState(initialImpactStats);
     const impactStatsRef = useRef(null);
-    const impactStatsInView = useInView(impactStatsRef, { once: true, amount: 0.5 }); // Trigger animation once when 50% in view
+    const impactStatsInView = useInView(impactStatsRef, { once: true, amount: 0.5 });
 
     useEffect(() => {
         if (impactStatsInView) {
             impactStatistics.forEach((stat, index) => {
                 let start = 0;
                 const end = stat.target;
-                const duration = 2000; // milliseconds
+                const duration = 2000;
                 let startTime = null;
 
                 const animateCount = (currentTime) => {
@@ -81,8 +138,7 @@ const Achievements = () => {
         }
     }, [impactStatsInView]);
 
-
-    // Detailed achievement data based on the provided list
+    // Detailed achievement data for various sections
     const prestigiousAwards = [
         { icon: "🏆", title: "Dr. A.P.J. Abdul Kalam Inspiration Award 2023", subtitle: "Most Trusted Education Brand in MP", iconColorClass: "text-primary", iconBgClass: "bg-primary/10" },
         { icon: "🏅", title: "ATAL Achievement Awards 2022", subtitle: "Highest Placement in Central India", iconColorClass: "text-secondary", iconBgClass: "bg-secondary/10" },
@@ -129,21 +185,45 @@ const Achievements = () => {
         { icon: "🏅", title: "Sports Champions", subtitle: "Winners of various Inter-University and State-level Sports Championships", iconColorClass: "text-accent", iconBgClass: "bg-accent/10" },
     ];
 
+    // Images for the new sliders, now pointing to public folder paths
+    const rankingsSliderImages = [
+        '/Achievements/Accreditation.jpg', // Placeholder for your actual image
+        '/Achievements/Accreditation1.jpg', // Placeholder for your actual image
+        '/Achievements/Accreditation2.jpeg', // Placeholder for your actual image
+    ];
+
+    const placementsSliderImages = [
+        '/placement/placement1.jpeg', // Placeholder for your actual image
+        '/placement/placement2.jpeg', // Placeholder for your actual image
+        '/placement/placement3.jpeg', // Placeholder for your actual image
+        '/placement/placement4.jpeg',
+        '/placement/placement.jpeg',
+    ];
+
+    const studentLifeSliderImages = [
+        '/culture/culture.jpeg', // Placeholder for your actual image
+        '/culture/culture1.jpeg', // Placeholder for your actual image
+        '/culture/culture2.jpg', // Placeholder for your actual image
+        '/culture/culture3.jpg', // Placeholder for your actual image
+        '/culture/culture4.jpg', // Placeholder for your actual image
+    ];
+
+
     // Card component for animating sections with zoom effect
     const AnimatedCard = ({ children, index }) => {
         const ref = useRef(null);
         const isInView = useInView(ref, { once: false, amount: 0.3 }); // Trigger when 30% in view
 
         const cardVariants = {
-            hidden: { opacity: 0, y: 50, scale: 0.95 }, // Start slightly smaller
+            hidden: { opacity: 0, y: 50, scale: 0.95 },
             visible: {
                 opacity: 1,
                 y: 0,
-                scale: 1, // Zoom to normal size
+                scale: 1,
                 transition: {
                     duration: 0.6,
                     ease: "easeOut",
-                    delay: index * 0.1, // Stagger animation
+                    delay: index * 0.1,
                 },
             },
         };
@@ -159,7 +239,6 @@ const Achievements = () => {
             </motion.div>
         );
     };
-
 
     return (
         <div>
@@ -217,7 +296,7 @@ const Achievements = () => {
                     {/* Hero Achievement - Prominent display of key stats */}
                     <div className="relative mb-20 rounded-2xl overflow-hidden shadow-2xl">
                         <img
-                            src={imageUrl}
+                            src="Achievements/Achievements!.webp" // Path to image in public folder
                             alt="Graduation ceremony celebration"
                             className="w-full h-96 object-cover"
                             loading="lazy"
@@ -267,6 +346,8 @@ const Achievements = () => {
                         <h3 className="text-3xl font-bold text-white text-center mb-12">
                             Rankings & Quality Accreditations
                         </h3>
+                        {/* Image Slider 1 */}
+                        <GenericImageSlider images={rankingsSliderImages} sectionTitle="Rankings & Quality" />
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                             {rankingsAccreditations.map((item, index) => (
                                 <AnimatedCard key={item.title} index={index}>
@@ -311,6 +392,8 @@ const Achievements = () => {
                         <h3 className="text-3xl font-bold text-white text-center mb-12">
                             Placements & Industry Collaboration
                         </h3>
+                        {/* Image Slider 2 */}
+                        <GenericImageSlider images={placementsSliderImages} sectionTitle="Placements & Industry" />
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                             {placementIndustryHighlights.map((item, index) => (
                                 <AnimatedCard key={item.title} index={index}>
@@ -333,6 +416,8 @@ const Achievements = () => {
                         <h3 className="text-3xl font-bold text-white text-center mb-12">
                             Vibrant Student Life & Sports
                         </h3>
+                        {/* Image Slider 3 */}
+                        <GenericImageSlider images={studentLifeSliderImages} sectionTitle="Student Life & Sports" />
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                             {studentLifeSports.map((item, index) => (
                                 <AnimatedCard key={item.title} index={index}>
@@ -346,46 +431,6 @@ const Achievements = () => {
                                         <p className="text-xs text-neutral-400">{item.subtitle}</p>
                                     </div>
                                 </AnimatedCard>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Success Stories - REVERTED TO PREVIOUS STYLE */}
-                    <div className="mb-16">
-                        <h3 className="text-3xl font-bold text-white text-center mb-12">
-                            Our Alumni's Success Stories
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {successStories.map((story, index) => (
-                                <div
-                                    key={index}
-                                    className="group relative bg-neutral-900 rounded-xl shadow-lg border border-neutral-700 overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl opacity-0 animate-fadeInUp"
-                                    style={{ animationDelay: `${index * 200 + 600}ms` }}
-                                >
-                                    <div className="flex">
-                                        <div className="w-1/3 overflow-hidden">
-                                            <img
-                                                src={story.imageSrc || imageUrl}
-                                                alt={story.title}
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                                loading="lazy"
-                                                onError={(e) => { e.target.onerror = null; e.target.src = placeholderImageUrl(1080, 640, story.title); }}
-                                            />
-                                        </div>
-                                        <div className="w-2/3 p-6">
-                                            <h4 className={`text-lg font-bold text-white mb-2 transition-colors duration-300 ${story.hoverTextColorClass}`}>
-                                                {story.title}
-                                            </h4>
-                                            <p className="text-sm text-neutral-400 mb-4">
-                                                {story.description}
-                                            </p>
-                                            <div className="flex items-center space-x-4">
-                                                <span className={`text-xs px-2 py-1 rounded ${story.tagBgColorClass} ${story.tagTextColorClass}`}>{story.tags[0]}</span>
-                                                <span className="text-xs text-neutral-300">{story.tags[1]}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             ))}
                         </div>
                     </div>
@@ -411,6 +456,7 @@ const Achievements = () => {
                     {/* "View All Achievements" button (now purely decorative) */}
                     <div className="text-center">
                         <button
+                            onClick={() => window.open('https://lnct.ac.in/achievements/', '_blank')}
                             className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-300 transform hover:scale-105"
                         >
                             Explore All Milestones
@@ -419,7 +465,7 @@ const Achievements = () => {
                 </div>
             </section>
         </div>
-    )
+    );
 }
 
 export default Achievements;
