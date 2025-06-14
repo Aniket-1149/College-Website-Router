@@ -22,13 +22,13 @@ const Achievements = () => {
         useEffect(() => {
             autoSlideIntervalRef.current = setInterval(goToNextSlide, 5000); // Change slide every 5 seconds
             return () => clearInterval(autoSlideIntervalRef.current);
-        }, []);
+        }, [images.length]); // Depend on images.length to re-setup if images change
 
         // Reset auto-slide timer when slide changes manually or automatically
         useEffect(() => {
             clearInterval(autoSlideIntervalRef.current);
             autoSlideIntervalRef.current = setInterval(goToNextSlide, 5000);
-        }, [currentSlide]);
+        }, [currentSlide, images.length]); // Include images.length here too
 
         // Touch event handlers for swipe
         const handleTouchStart = (e) => {
@@ -52,27 +52,48 @@ const Achievements = () => {
             touchEndX.current = 0;
         };
 
+        // State to keep track of image loading to apply fade effect
+        const [imageLoaded, setImageLoaded] = useState(false);
+        const handleImageLoad = () => {
+            setImageLoaded(true);
+        };
+
+        // Reset imageLoaded state when currentSlide changes
+        useEffect(() => {
+            setImageLoaded(false);
+        }, [currentSlide]);
+
+
         return (
             <div
                 className="relative rounded-2xl overflow-hidden shadow-xl mb-12 flex items-center justify-center bg-black"
-
+                // Fixed height for the slider to prevent layout shifts
+                style={{ height: '500px' }} // You can adjust this height as needed
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
             >
-                <img
-                    alt={`${sectionTitle} Image ${currentSlide + 1}`}
-                    className="w-full max-h-[500px] object-contain transition-opacity duration-1000 mx-auto" // Smoother transition
-                    loading="lazy"
-                    src={images[currentSlide]}
-                    key={currentSlide} // Forces re-render for transition
-                    onError={(e) => { e.target.onerror = null; e.target.src = placeholderImageUrl(1200, 400, `${sectionTitle} ${currentSlide + 1}`); }}
-                />
+                {images.map((src, index) => (
+                    <img
+                        key={index} // Use index as key here, as we are displaying all images and controlling visibility with CSS
+                        alt={`${sectionTitle} Image ${index + 1}`}
+                        // Use absolute positioning to stack images
+                        className={`absolute w-full h-full object-contain transition-opacity duration-700 mx-auto
+                                    ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+                        loading="lazy"
+                        src={src}
+                        onLoad={index === currentSlide ? handleImageLoad : undefined} // Only trigger for current slide
+                        onError={(e) => { e.target.onerror = null; e.target.src = placeholderImageUrl(1200, 400, `${sectionTitle} ${index + 1}`); }}
+                        // Important: Preload images using a hidden div or by simply rendering them all with opacity 0
+                        // For better UX, you might consider preloading images in the background if they are large
+                    />
+                ))}
+
                 {/* Overlay for depth and text visibility */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-2xl"></div>
 
                 {/* Slider Navigation Dots */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10"> {/* z-10 to ensure dots are above overlay */}
                     {images.map((_, index) => (
                         <button
                             key={index}
