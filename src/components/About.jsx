@@ -197,12 +197,12 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { src: "public/lnctprojectpic/Incubation.jpg", title: "Incubation Center", desc: "State-of-the-art facilities" },
-              { src: "public/lnctprojectpic/idealab.jpg", title: "Idea Lab", desc: "Collaborative spaces" },
-              { src: "public/lnctprojectpic/Sports-LNCT-12.jpeg", title: "Sports Facilities", desc: "Champions built, futures take flight." },
-              { src: "public/lnctprojectpic/lnct lab.jpg", title: "Computer Labs", desc: "Advanced laboratories" },
-              { src: "public/lnctprojectpic/hostel.jpeg", title: "Student Housing", desc: "Modern living spaces" },
-              { src: "public/lnctprojectpic/Lnct_mainpic.jpg", title: "Academic Block", desc: "Smart classrooms" },
+              { src: "/lnctprojectpic/Incubation.jpg", title: "Incubation Center", desc: "State-of-the-art facilities" },
+              { src: "/lnctprojectpic/idealab.jpg", title: "Idea Lab", desc: "Collaborative spaces" },
+              { src: "/lnctprojectpic/Sports-LNCT-12.jpeg", title: "Sports Facilities", desc: "Champions built, futures take flight." },
+              { src: "/lnctprojectpic/lnct lab.jpg", title: "Computer Labs", desc: "Advanced laboratories" },
+              { src: "/lnctprojectpic/hostel.jpeg", title: "Student Housing", desc: "Modern living spaces" },
+              { src: "/lnctprojectpic/Lnct_mainpic.jpg", title: "Academic Block", desc: "Smart classrooms" },
             ].map((item, i) => (
               <GalleryCard key={i} item={item} index={i} />
             ))}

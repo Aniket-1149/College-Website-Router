@@ -22,7 +22,7 @@ const Colleges = () => {
       url: "https://lnct.ac.in/",
       tagColorClass: "bg-primary",
       hoverTextColorClass: "group-hover:text-primary",
-      image: "public/lnctprojectpic/lnct_mainpic.jpg",
+      image: "/lnctprojectpic/Lnct_mainpic.jpg",
     },
     {
       id: "lnct-science",
@@ -33,7 +33,7 @@ const Colleges = () => {
       url: "https://lnct.ac.in/lnct-and-science/",
       tagColorClass: "bg-secondary",
       hoverTextColorClass: "group-hover:text-secondary",
-      image: "public/lnctprojectpic/lnct&S.jpg",
+      image: "/lnctprojectpic/lnct&S.jpg",
     },
     {
       id: "lnct-excellence",
@@ -44,7 +44,7 @@ const Colleges = () => {
       url: "https://lnct.ac.in/lnct-excellence-college/",
       tagColorClass: "bg-accent",
       hoverTextColorClass: "group-hover:text-accent",
-      image: "public/lnctprojectpic/lnctExcellence.jpg",
+      image: "/lnctprojectpic/lnctExcellence.jpg",
     },
     {
       id: "lnct-university-main",
@@ -55,7 +55,7 @@ const Colleges = () => {
       url: "https://lnctu.ac.in/",
       tagColorClass: "bg-primary",
       hoverTextColorClass: "group-hover:text-primary",
-      image: "public/lnctprojectpic/Lnct_university.jpg",
+      image: "/lnctprojectpic/Lnct_university.jpg",
     },
     {
       id: "lnct-indore",
@@ -66,7 +66,7 @@ const Colleges = () => {
       url: "https://www.lnctgroup.in/lnct-indore/",
       tagColorClass: "bg-secondary",
       hoverTextColorClass: "group-hover:text-secondary",
-      image: "public/lnctprojectpic/lnctIndore.jpg",
+      image: "/lnctprojectpic/lnctIndore.jpg",
     },
     {
       id: "jnct-professional-university",
@@ -77,7 +77,7 @@ const Colleges = () => {
       url: "https://jnctpu.edu.in/",
       tagColorClass: "bg-accent",
       hoverTextColorClass: "group-hover:text-accent",
-      image: "public/lnctprojectpic/Jnctbhopal.webp",
+      image: "/lnctprojectpic/Jnctbhopal.webp",
     },
     {
       id: "lnct-mca", // Simplified ID
@@ -88,7 +88,7 @@ const Colleges = () => {
       url: "https://lnct.ac.in/mca/",
       tagColorClass: "bg-primary",
       hoverTextColorClass: "group-hover:text-primary",
-      image: "public/lnctprojectpic/LNCT_MCA.jpg",
+      image: "/lnctprojectpic/LNCT_MCA.jpg",
     },
     {
       id: "lnct-pharmacy", // Simplified ID
@@ -99,7 +99,7 @@ const Colleges = () => {
       url: "https://lnct.ac.in/lnct-pharmacy/",
       tagColorClass: "bg-secondary",
       hoverTextColorClass: "group-hover:text-secondary",
-      image: "public/lnctprojectpic/LNCT_Pharmacy.jpg",
+      image: "/lnctprojectpic/LNCT_Pharmacy.jpg",
     },
 
     // --- NEW COLLEGES BASED ON YOUR PROVIDED LINKS (Duplicates and non-colleges removed) ---
@@ -113,7 +113,7 @@ const Colleges = () => {
       url: "https://lnctvu.ac.in/",
       tagColorClass: "bg-accent",
       hoverTextColorClass: "group-hover:text-accent",
-      image: "public/lnctprojectpic/LNCT_vocotion_university.jpg", // From image_retrieval
+      image: "/lnctprojectpic/LNCT_vocotion_university.jpg", // From image_retrieval
     },
     {
       id: "lnct-medical-college-indore",
@@ -121,10 +121,10 @@ const Colleges = () => {
       description:
         "Discover our MBBS programs, advanced medical facilities, research opportunities, and healthcare services.",
       established: "Est. 2009",
-      url: "https://indorelnmc.in/",
+      url: "https://indorelnmc.in/",    
       tagColorClass: "bg-primary",
       hoverTextColorClass: "group-hover:text-primary",
-      image: "public/lnctprojectpic/LNCT_medical_indore.jpg", // From user upload
+      image: "/lnctprojectpic/LNCT_medical_indore.jpg", // From user upload
     },
     {
       id: "jn-college-nursing",
@@ -135,7 +135,7 @@ const Colleges = () => {
       url: "https://jncn.ac.in/",
       tagColorClass: "bg-secondary",
       hoverTextColorClass: "group-hover:text-secondary",
-      image: "public/lnctprojectpic/JNU_medical.jpg", // From user upload
+      image: "/lnctprojectpic/JNU_medical.jpg", // From user upload
     },
     {
       id: "cec-bilaspur",
@@ -146,7 +146,7 @@ const Colleges = () => {
       url: "https://cecbilaspur.ac.in/",
       tagColorClass: "bg-accent",
       hoverTextColorClass: "group-hover:text-accent",
-      image: "public/lnctprojectpic/Central_Engineering_Bilaspur.jpg", // From user upload
+      image: "/lnctprojectpic/Central_Engineering_Bilaspur.jpg", // From user upload
     },
     {
       id: "lnct-polytechnic-college",
@@ -157,7 +157,7 @@ const Colleges = () => {
       url: "https://lnctps.in/",
       tagColorClass: "bg-primary",
       hoverTextColorClass: "group-hover:text-primary",
-      image: "public/lnctprojectpic/Lnct_university.jpg", // From image_retrieval
+      image: "/lnctprojectpic/Lnct_university.jpg", // From image_retrieval
     },
     {
       id: "lnct-university-jabalpur",
@@ -168,7 +168,7 @@ const Colleges = () => {
       url: "https://lnctuj.com/",
       tagColorClass: "bg-secondary",
       hoverTextColorClass: "group-hover:text-secondary",
-      image: "public/lnctprojectpic/LNCT_jabalpur.jpg", // From image_retrieval (reused generic LNCT University image)
+      image: "/lnctprojectpic/LNCT_jabalpur.jpg", // From image_retrieval (reused generic LNCT University image)
     },
     {
       id: "lnct-world-schools",
@@ -179,7 +179,7 @@ const Colleges = () => {
       url: "https://lnctworldschools.com/",
       tagColorClass: "bg-primary",
       hoverTextColorClass: "group-hover:text-primary",
-      image: "public/lnctprojectpic/LNCT_world_school.jpg", // From image_retrieval
+      image: "/lnctprojectpic/LNCT_world_school.jpg", // From image_retrieval
     },
     {
       id: "lnct-rishiraj-institute",
@@ -190,7 +190,7 @@ const Colleges = () => {
       url: "https://lnctrishiraj.ac.in/",
       tagColorClass: "bg-accent",
       hoverTextColorClass: "group-hover:text-accent",
-      image: "public/lnctprojectpic/rishirajCollege.jpg", // From image_retrieval
+      image: "/lnctprojectpic/rishirajCollege.jpg", // From image_retrieval
     },
     {
       id: "lnct-school-pharmacy-indore",
@@ -201,7 +201,7 @@ const Colleges = () => {
       url: "https://lnctsopindore.in/",
       tagColorClass: "bg-primary",
       hoverTextColorClass: "group-hover:text-primary",
-      image: "public/lnctprojectpic/LNCT Medical College & Sewakunj Hospital Indore.jpg", // From image_retrieval
+      image: "/lnctprojectpic/LNCT Medical College & Sewakunj Hospital Indore.jpg", // From image_retrieval
     },
     {
       id: "clc-homeopathy",
@@ -212,7 +212,7 @@ const Colleges = () => {
       url: "https://clchomeopathy.in/",
       tagColorClass: "bg-secondary",
       hoverTextColorClass: "group-hover:text-secondary",
-      image: "public/lnctprojectpic/CLC_Homopathy.jpg", // From user upload
+      image: "/lnctprojectpic/CLC_Homopathy.jpg", // From user upload
     },
     {
       id: "lnct-guru",
@@ -223,7 +223,7 @@ const Colleges = () => {
       url: "https://lnctguru.com/",
       tagColorClass: "bg-accent",
       hoverTextColorClass: "group-hover:text-accent",
-      image: "public/lnctprojectpic/LNCT_Guru.png", // From image_retrieval
+      image: "/lnctprojectpic/LNCT_Guru.png", // From image_retrieval
     },
     {
       id: "ips-bilaspur",
@@ -234,7 +234,7 @@ const Colleges = () => {
       url: "https://ipsbilaspur.com/",
       tagColorClass: "bg-primary",
       hoverTextColorClass: "group-hover:text-primary",
-      image: "public/lnctprojectpic/ipsbliashpur.jpg", // From user upload
+      image: "/lnctprojectpic/ipsbliashpur.jpg", // From user upload
     },
     {
       id: "ln-ayurved-college",
@@ -245,7 +245,7 @@ const Colleges = () => {
       url: "https://lnayurvedcollege.com/",
       tagColorClass: "bg-secondary",
       hoverTextColorClass: "group-hover:text-secondary",
-      image: "public/lnctprojectpic/lnct_ayurveda.jpg", // From image_retrieval
+      image: "/lnctprojectpic/lnct_ayurveda.jpg", // From image_retrieval
     },
   ];
 
