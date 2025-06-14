@@ -1,49 +1,63 @@
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion"; // Ensure these imports are present
+import React, { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion"; // Old: Ensure these imports are present
 
 const About = () => {
-  const imageUrl =
-    "https://lnct.ac.in/wp-content/uploads/2021/04/lnct-slider2-1536x684.jpg";
+  // Old: Common placeholder for images
   const placeholderImageUrl = (width, height, text = "Image Unavailable") =>
-    `https://placehold.co/${width}x${height}/CCCCCC/333333?text=${encodeURIComponent(
-      text
-    )}`;
+    `https://placehold.co/${width}x${height}/CCCCCC/333333?text=${encodeURIComponent(text)}`;
 
-  // --- Start of Vision For Tomorrow Section's internal components ---
-  const visionSlides = [
-    {
-      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80',
-      heading: 'Empowering Future Leaders',
-      description: 'LNCT fosters a dynamic academic ecosystem that shapes professionals with leadership, ethics, and technical excellence.',
-    },
-    {
-      image: 'public/lnctprojectpic/Innovate.webp',
-      heading: 'Innovating Through Research',
-      description: 'We emphasize cutting-edge research and innovation, fostering a culture of curiosity and impactful problem-solving.',
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&w=1200&q=80',
-      heading: 'Global Vision & Collaboration',
-      description: 'LNCT nurtures global partnerships and multicultural values to prepare students for global opportunities and cultural diversity.',
-    },
-    {
-      image: 'public/lnctprojectpic/Sustain.webp',
-      heading: 'Sustainability & Social Impact',
-      description: 'We promote eco-consciousness and social responsibility, integrating sustainability deeply into education and campus life.',
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1517457375823-bff760341773?q=80&w=1200',
-      heading: 'Community & Beyond',
-      description: 'Engaging with local and global communities to foster a sense of belonging and contribute positively to society.',
-    },
+  // Old: Image Slider for "Building Futures Through Education" Section
+  const buildingFuturesSliderImages = [
+    "https://lnct.ac.in/wp-content/uploads/2021/04/LNCT-College-768x509.jpg",
+    "https://lnct.ac.in/wp-content/uploads/2021/08/Meeting-of-policy-implementation-team.jpg",
+    "https://lnct.ac.in/wp-content/uploads/2021/04/Activity-Classes-for-Student-8-768x509.jpg",
+    "https://lnct.ac.in/wp-content/uploads/2023/07/Best-College-in-Indian-scaled.jpg",
   ];
 
-  const VisionCard = ({ slide, index }) => {
-    const ref = useRef(null);
-    // Keep 'once: true' for VisionCard as it's a simple one-time reveal
-    const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [currentBuildingFuturesSlide, setCurrentBuildingFuturesSlide] = useState(0);
+  const buildingFuturesTouchStartX = useRef(0);
+  const buildingFuturesTouchEndX = useRef(0);
 
-    const cardVariants = {
+  const stats = [
+    { value: "25+", label: "Years of Excellence", description: "Trusted educational legacy", colorClass: "text-primary" },
+    { value: "15+", label: "Campus Locations", description: "Across multiple cities", colorClass: "text-accent" },
+  ];
+
+  // Old: Function to advance to the next slide
+  const goToNextBuildingFuturesSlide = () => {
+    setCurrentBuildingFuturesSlide((prev) => (prev + 1) % buildingFuturesSliderImages.length);
+  };
+
+  // ✅ New: Removed auto-slide useEffect
+
+  // Old: Touch event handlers for slider swipe
+  const handleBuildingFuturesTouchStart = (e) => {
+    buildingFuturesTouchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleBuildingFuturesTouchMove = (e) => {
+    buildingFuturesTouchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleBuildingFuturesTouchEnd = () => {
+    if (buildingFuturesTouchStartX.current - buildingFuturesTouchEndX.current > 50) {
+      goToNextBuildingFuturesSlide();
+    } else if (buildingFuturesTouchStartX.current - buildingFuturesTouchEndX.current < -50) {
+      setCurrentBuildingFuturesSlide((prev) =>
+        (prev - 1 + buildingFuturesSliderImages.length) % buildingFuturesSliderImages.length
+      );
+    }
+    buildingFuturesTouchStartX.current = 0;
+    buildingFuturesTouchEndX.current = 0;
+  };
+
+  // Old: Architecture Gallery Section's internal components
+  const GalleryCard = ({ item, index }) => {
+    const ref = useRef(null);
+    // Old: Trigger when 30% in view, re-triggers on scroll out
+    const isInView = useInView(ref, { once: false, amount: 0.3 });
+
+    const galleryCardVariants = {
       hidden: { opacity: 0, y: 50 },
       visible: {
         opacity: 1,
@@ -59,67 +73,10 @@ const About = () => {
     return (
       <motion.div
         ref={ref}
-        variants={cardVariants}
+        variants={galleryCardVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="w-full p-4"
-      >
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col group transition-transform duration-300 ease-out hover:scale-[1.03] hover:shadow-xl">
-          <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
-            <img
-              src={slide.image}
-              alt={slide.heading}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = placeholderImageUrl(600, 400, slide.heading);
-              }}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          </div>
-          <div className="p-6 flex flex-col justify-between flex-grow">
-            <h3 className="text-xl font-bold text-neutral-900 mb-2 group-hover:text-blue-700 transition-colors">
-              {slide.heading}
-            </h3>
-            <p className="text-neutral-700 text-base leading-relaxed mb-4">
-              {slide.description}
-            </p>
-          </div>
-        </div>
-      </motion.div>
-    );
-  };
-  // --- End of Vision For Tomorrow Section's internal components ---
-
-
-  // --- Architecture Gallery Section's internal components ---
-  // Reusable component for each Gallery Item with dynamic scroll-reveal/hide
-  const GalleryCard = ({ item, index }) => {
-    const ref = useRef(null);
-    // *** IMPORTANT CHANGE: `once: false` for GalleryCard ***
-    // This allows the cards to animate in AND out of view as you scroll
-    const isInView = useInView(ref, { once: false, amount: 0.3 }); // Trigger when 30% in view, re-triggers on scroll out
-
-    const cardVariants = {
-      hidden: { opacity: 0, y: 50 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: 0.6,
-          ease: "easeOut",
-          delay: index * 0.15, // Staggered delay for appearance
-        },
-      },
-    };
-
-    return (
-      <motion.div
-        ref={ref}
-        variants={cardVariants}
-        initial="hidden"
-        // Animate based on isInView status (visible when in view, hidden when out of view)
-        animate={isInView ? "visible" : "hidden"}
-        key={item.title} // Ensure a unique key for each item
+        key={item.title}
         className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
       >
         <img
@@ -141,126 +98,118 @@ const About = () => {
       </motion.div>
     );
   };
-  // --- End of Architecture Gallery Section's internal components ---
-
 
   return (
-    <div className="font-inter">
-      {/* ====== TOP SECTION WITH BLACK BACKGROUND ====== */}
+    <>
+      {/* Old: Custom CSS for colors and animations */}
+      <style>{`
+        .text-primary { color: #4F46E5; }
+        .bg-primary { background-color: #4F46E5; }
+        .text-secondary { color: #10B981; }
+        .bg-secondary { background-color: #10B981; }
+        .text-accent { color: #EC4899; }
+        .bg-accent { background-color: #EC4899; }
 
-      {/* Section Header */}
-      <div className="text-center mb-16">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-6">About</h2>
-        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-          Pioneering excellence in education for over 25 years, shaping
-          tomorrow's leaders through innovation and dedication.
-        </p>
-      </div>
+        @keyframes fadeInScale {
+          from { opacity: 0; transform: translateY(20px) scale(0.95); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-      {/* Main Content Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center mb-20">
-        {/* Left Content */}
-        <div className="space-y-8">
-          <div className="space-y-6">
-            <h3 className="text-3xl font-bold">
-              Building Futures Through Education
-            </h3>
-            <p className="text-lg text-gray-300 leading-relaxed">
-              LNCT Group stands as a beacon of educational excellence, committed
-              to nurturing minds and fostering innovation across multiple
-              disciplines.
-            </p>
-            <p className="text-lg text-gray-300 leading-relaxed">
-              Our state-of-the-art facilities and world-class faculty create an
-              environment where students thrive and achieve their full
-              potential.
-            </p>
+        .animate-fade-in-scale {
+          animation: fadeInScale 0.7s ease-out forwards;
+        }
+
+        .stat-card-glow:hover {
+          box-shadow: 0 0 20px rgba(79, 70, 229, 0.4), 0 0 30px rgba(236, 72, 153, 0.3);
+          transform: translateY(-5px) scale(1.02);
+          transition: all 0.3s ease-in-out;
+        }
+
+        .slider-image-transition {
+          transition: transform 1s ease-in-out;
+        }
+      `}</style>
+
+      {/* Old: About Section */}
+      <section id="about" className="py-20 bg-neutral-50 text-neutral-900 font-inter">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-10 animate-fade-in-scale">
+            <div className="space-y-6">
+              <h3 className="text-4xl sm:text-5xl font-bold text-neutral-900 leading-tight">
+                Building Futures Through Education <br />
+                
+              </h3>
+              <p className="text-lg text-neutral-700 leading-relaxed">
+                LNCT Group stands as a beacon of educational excellence, committed to nurturing minds and fostering innovation.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              {stats.map((stat, index) => (
+                <div key={index} className="bg-white p-6 rounded-xl border border-neutral-200 stat-card-glow cursor-pointer">
+                  <div className={`${stat.colorClass} text-4xl font-bold mb-2`}>{stat.value}</div>
+                  <div className="text-neutral-900 font-semibold mb-1 text-lg">{stat.label}</div>
+                  <div className="text-sm text-neutral-600">{stat.description}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Key Features Cards */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            <div className="bg-white text-black p-6 rounded-lg border border-neutral-200 hover:shadow-lg transition-shadow duration-300">
-              <div className="text-primary text-2xl font-bold mb-2">25+</div>
-              <div className="font-semibold mb-1">Years of Excellence</div>
-              <div className="text-sm text-neutral-700">
-                Trusted educational legacy
-              </div>
-            </div>
-            <div className="bg-white text-black p-6 rounded-lg border border-neutral-200 hover:shadow-lg transition-shadow duration-300">
-              <div className="text-accent text-2xl font-bold mb-2">15+</div>
-              <div className="font-semibold mb-1">Campus Locations</div>
-              <div className="text-sm text-neutral-700">
-                Across multiple cities
-              </div>
+          {/* Old: Image Slider Section */}
+          <div className="relative animate-fade-in-scale rounded-2xl overflow-hidden shadow-xl"
+            onTouchStart={handleBuildingFuturesTouchStart}
+            onTouchMove={handleBuildingFuturesTouchMove}
+            onTouchEnd={handleBuildingFuturesTouchEnd}
+          >
+            <img
+              alt="LNCT Campus"
+              className="w-full h-[400px] sm:h-[500px] object-cover rounded-2xl slider-image-transition"
+              loading="lazy"
+              src={buildingFuturesSliderImages[currentBuildingFuturesSlide]}
+              key={currentBuildingFuturesSlide}
+              onError={(e) => { e.target.onerror = null; e.target.src = placeholderImageUrl(1024, 1024, 'Campus Image'); }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+              {buildingFuturesSliderImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentBuildingFuturesSlide(index)}
+                  className={`w-3 h-3 rounded-full ${currentBuildingFuturesSlide === index ? 'bg-primary' : 'bg-white bg-opacity-50'} transition-colors duration-300`}
+                  aria-label={`Go to slide ${index + 1}`}
+                ></button>
+              ))}
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Right Image */}
-        <div className="relative">
-          <img
-            src={imageUrl}
-            alt="Modern college campus"
-            className="w-full h-96 object-cover rounded-lg shadow-lg"
-            loading="lazy"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = placeholderImageUrl(1536, 684);
-            }}
-          />
-        </div>
-      </div>
+      {/* Old: ARCHITECTURE GALLERY */}
+      <section className="bg-neutral-900 text-white py-20 font-inter">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h3 className="text-4xl sm:text-5xl font-bold text-white mb-6">Our Modern Campus Architecture</h3>
+            <p className="text-xl text-neutral-300 max-w-3xl mx-auto">
+              Explore the innovative design and cutting-edge facilities that define our campuses.
+            </p>
+          </div>
 
-      {/* ====== ARCHITECTURE GALLERY SECTION (NOW WITH DYNAMIC SCROLL-REVEAL/HIDE) ====== */}
-      <div className="bg-black text-white py-16">
-        {/* Architecture Gallery Header */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-          <h3 className="text-3xl font-bold text-center mb-12">
-            Our Modern Campus Architecture
-          </h3>
-
-          {/* Gallery Items Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Gallery Items - Now using the GalleryCard component with `once: false` */}
             {[
-              {
-                src: "public/lnctprojectpic/Incubation.jpg",
-                title: "Incubation Center",
-                desc: "State-of-the-art facilities",
-              },
-              {
-                src: "public/lnctprojectpic/idealab.jpg",
-                title: "Idea Lab",
-                desc: "Collaborative spaces",
-              },
-              {
-                src: "public/lnctprojectpic/Sports-LNCT-12.jpeg",
-                title: "Sports Facilities",
-                desc: "Champions built, futures take flight.",
-              },
-              {
-                src: "public/lnctprojectpic/lnct lab.jpg",
-                title: "Computer Labs",
-                desc: "Advanced laboratories",
-              },
-              {
-                src: "public/lnctprojectpic/hostel.jpeg",
-                title: "Student Housing",
-                desc: "Modern living spaces",
-              },
-              {
-                src: imageUrl, // Reusing main image for Academic Block
-                title: "Academic Block",
-                desc: "Smart classrooms",
-              },
+              { src: "public/lnctprojectpic/Incubation.jpg", title: "Incubation Center", desc: "State-of-the-art facilities" },
+              { src: "public/lnctprojectpic/idealab.jpg", title: "Idea Lab", desc: "Collaborative spaces" },
+              { src: "public/lnctprojectpic/Sports-LNCT-12.jpeg", title: "Sports Facilities", desc: "Champions built, futures take flight." },
+              { src: "public/lnctprojectpic/lnct lab.jpg", title: "Computer Labs", desc: "Advanced laboratories" },
+              { src: "public/lnctprojectpic/hostel.jpeg", title: "Student Housing", desc: "Modern living spaces" },
+              { src: "public/lnctprojectpic/Lnct_mainpic.jpg", title: "Academic Block", desc: "Smart classrooms" },
             ].map((item, i) => (
-              <GalleryCard key={i} item={item} index={i} /> // Render GalleryCard
+              <GalleryCard key={i} item={item} index={i} />
             ))}
           </div>
         </div>
-      </div>
-      {/* ====== END OF ARCHITECTURE GALLERY SECTION ====== */}
-    </div>
+      </section>
+    </>
   );
 };
 

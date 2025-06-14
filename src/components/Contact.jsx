@@ -328,7 +328,7 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Campus Locations */}
+          {/* Campus Locations
           <div className="mb-16">
             <h3 className="text-3xl font-bold text-neutral-900 text-center mb-12">
               Our Campus Locations
@@ -370,10 +370,10 @@ const Contact = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Quick Contact Options */}
-          <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 text-white text-center">
+          <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 text-black text-center">
             <h3 className="text-2xl font-bold mb-4">Need Immediate Assistance?</h3>
             <p className="text-lg mb-8 opacity-90">
               Our admissions team is ready to help you with any questions about programs, applications, or campus visits.
@@ -388,7 +388,7 @@ const Contact = () => {
               </button>
               <button
                 onClick={handleQuickContactSchedule}
-                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300 transform hover:scale-105"
+                className="border-2 border-white text-black px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300 transform hover:scale-105"
               >
                 📅 Schedule Campus Visit
               </button>
