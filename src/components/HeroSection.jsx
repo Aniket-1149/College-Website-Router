@@ -135,7 +135,7 @@ const HeroSection = () => {
             {/* Main Heading */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
               <span className="block lnct-text-fill-effect">LNCT Group Of Colleges</span>
-              
+
             </h1>
 
             {/* Subheading */}
@@ -145,17 +145,26 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-              <button className="group relative px-8 py-4 bg-primary text-white font-semibold rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/25">
+              <button
+                onClick={() => {
+                  document.getElementById("colleges").scrollIntoView({ behavior: "smooth" });
+                }}
+                className="group relative px-8 py-4 bg-primary text-white font-semibold rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/25"
+              >
                 <span className="relative z-10">Explore Our Colleges</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
               </button>
 
-              <button className="group px-8 py-4 border-2 border-white text-white font-semibold rounded-lg transition-all duration-300 hover:bg-white hover:text-neutral-900 hover:scale-105">
-                Learn More
-                <span className="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">
-                  →
-                </span>
-              </button>
+
+              <a href="https://lnct.ac.in/" target="_blank" rel="noopener noreferrer">
+                <button className="group px-8 py-4 border-2 border-white text-white font-semibold rounded-lg transition-all duration-300 hover:bg-white hover:text-neutral-900 hover:scale-105">
+                  Learn More
+                  <span className="inline-block ml-2 transform group-hover:translate-x-1 transition-transform duration-300">
+                    →
+                  </span>
+                </button>
+              </a>
+
             </div>
 
             {/* Stats */}
